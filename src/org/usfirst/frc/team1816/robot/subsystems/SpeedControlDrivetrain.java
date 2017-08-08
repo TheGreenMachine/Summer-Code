@@ -10,11 +10,11 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 	private double p = 0.1;
 	private double i = 0;
 	private double d = 1;
-	private double f = 0;
+	private double f = 0.249;
 	private int izone = 100;
 	private double ramprate = 36;
 	private int profile = 0;
-	private double maxSpeed = 1500.0;
+	private double maxSpeed = 250.0;
 	
 	
     public SpeedControlDrivetrain(int rightMain, int rightSlave, int leftMain, int leftSlave) {
@@ -26,6 +26,9 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 		
 		this.leftMain.setInverted(true);
 		this.leftSlave.setInverted(true);
+		
+		this.leftMain.configEncoderCodesPerRev(9843/4);
+		this.rightMain.configEncoderCodesPerRev(9843/4);
 		
 		this.rightMain.enableBrakeMode(true);
 		this.rightSlave.enableBrakeMode(true);
@@ -40,11 +43,14 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 		this.rightMain.changeControlMode(CANTalon.TalonControlMode.Speed);
 		this.leftMain.changeControlMode(CANTalon.TalonControlMode.Speed);
 		
-		this.rightMain.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		this.leftMain.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		this.rightMain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		this.leftMain.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		
 		this.rightMain.setPID(p, i, d, f, izone, ramprate, profile);
 		this.leftMain.setPID(p, i, d, f, izone, ramprate, profile);
+		
+		this.leftMain.setEncPosition(0);
+		this.rightMain.setEncPosition(0);
 	}
 
 	public void initDefaultCommand() {
@@ -59,6 +65,8 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 	public void getTalonSpeed() {
 		System.out.println("Right: " + rightMain.getSpeed());
 		System.out.println("Left: " + leftMain.getSpeed());
+		System.out.println("Left Enc Pos: " + leftMain.getEncPosition() + " Left Revs" + leftMain.getPosition());
+		System.out.println("Right Enc Pos: " + leftMain.getEncPosition() + " Right Revs: " + rightMain.getPosition());
 	}
 	
 	public void changePID(double p, double i, double d, double f) {

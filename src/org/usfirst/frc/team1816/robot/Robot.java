@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		
-		drivetrain = new SpeedControlDrivetrain(1, 2, 4, 3);
+		drivetrain = new SpeedControlDrivetrain(4, 3, 1, 2);
 		joystick = new Joystick(1);
 		
 		oi = new OI();
