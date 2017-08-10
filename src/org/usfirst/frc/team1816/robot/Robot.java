@@ -5,6 +5,8 @@ import org.usfirst.frc.team1816.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1816.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team1816.robot.subsystems.SpeedControlDrivetrain;
 
+import com.edinarobotics.utils.log.Logging;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,7 +21,7 @@ public class Robot extends IterativeRobot {
 	private SpeedControlDrivetrain drivetrain;
 
 	public Joystick joystick;
-
+	public Logging logging;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot {
 		// ai.setOversampleBits(4);
 		// ai.setAverageBits(2);
 		// AnalogInput.setGlobalSampleRate(62500);
+		logging = new Logging("log");
 
 	}
 
@@ -53,6 +56,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		logging.close();
 	}
 
 	@Override
@@ -107,6 +111,8 @@ public class Robot extends IterativeRobot {
 			drivetrain.setTalonTargetSpeed(joypos, joypos);
 		}
 		drivetrain.getTalonSpeed();
+		
+		logging.log(joypos+""+rotation);
 	}
 
 	@Override
