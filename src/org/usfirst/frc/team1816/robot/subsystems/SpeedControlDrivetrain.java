@@ -16,6 +16,7 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 	private int profile = 0;
 	private double maxSpeed = 250.0;
 	
+	private static final int TICKS_PER_REV = 9843;
 	
     public SpeedControlDrivetrain(int rightMain, int rightSlave, int leftMain, int leftSlave) {
 		super();
@@ -27,7 +28,7 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 		this.leftMain.setInverted(true);
 		this.leftSlave.setInverted(true);
 		
-		this.leftMain.configEncoderCodesPerRev(9843/4);
+		this.leftMain.configEncoderCodesPerRev(9843/4); 
 		this.rightMain.configEncoderCodesPerRev(9843/4);
 		
 		this.rightMain.enableBrakeMode(true);
@@ -57,16 +58,17 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 		
     }
 	
-	public void setTalonTargetSpeed(double joyInput) {
-		rightMain.set(joyInput * maxSpeed);
-		leftMain.set(joyInput * maxSpeed);
+	public void setTalonTargetSpeed(double joyRight, double joyLeft) {
+		rightMain.set(joyRight * maxSpeed);
+		leftMain.set(joyLeft * maxSpeed);
+		
 	}
 	
 	public void getTalonSpeed() {
-		System.out.println("Right: " + rightMain.getSpeed());
-		System.out.println("Left: " + leftMain.getSpeed());
-		System.out.println("Left Enc Pos: " + leftMain.getEncPosition() + " Left Revs" + leftMain.getPosition());
-		System.out.println("Right Enc Pos: " + leftMain.getEncPosition() + " Right Revs: " + rightMain.getPosition());
+		//System.out.println("Right: " + rightMain.getSpeed());
+		//System.out.println("Left: " + leftMain.getSpeed());
+		//System.out.println("Left Enc Pos: " + leftMain.getEncPosition() + " Left Revs" + leftMain.getPosition());
+		//System.out.println("Right Enc Pos: " + leftMain.getEncPosition() + " Right Revs: " + rightMain.getPosition());
 	}
 	
 	public void changePID(double p, double i, double d, double f) {
