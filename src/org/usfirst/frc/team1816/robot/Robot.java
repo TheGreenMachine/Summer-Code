@@ -19,9 +19,10 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	private SpeedControlDrivetrain drivetrain;
-
-	public Joystick joystick;
-	public Logging logging;
+	private double time;
+	private Joystick joystick;
+	private Logging logging;
+	
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -44,8 +45,6 @@ public class Robot extends IterativeRobot {
 		// ai.setOversampleBits(4);
 		// ai.setAverageBits(2);
 		// AnalogInput.setGlobalSampleRate(62500);
-		logging = new Logging("log");
-
 	}
 
 	@Override
@@ -56,7 +55,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		logging.close();
+		if(logging != null) {
+			logging.close();
+		}
 	}
 
 	@Override
@@ -89,6 +90,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		logging = new Logging("log");
+		time = System.currentTimeMillis();
 	}
 
 	@Override
@@ -101,18 +104,18 @@ public class Robot extends IterativeRobot {
 		double joypos = -joystick.getY();
 		double rotation = joystick.getTwist();
 		System.out.println(joypos);
-		if (rotation < - 0.05) {
-			drivetrain.setTalonTargetSpeed(joypos * (1+rotation), joypos);
-			System.out.println("L/R Values: " +joypos+" " + rotation);
+		if (rotation < -0.05) {
+			drivetrain.setTalonTargetSpeed(joypos * (1 + rotation), joypos);
+			System.out.println("L/R Values: " + joypos + " " + rotation);
 		} else if (rotation > 0.05) {
-			drivetrain.setTalonTargetSpeed(joypos, joypos * (1-rotation));
-			System.out.println("L/R Values: " +joypos+" " + rotation);
+			drivetrain.setTalonTargetSpeed(joypos, joypos * (1 - rotation));
+			System.out.println("L/R Values: " + joypos + " " + rotation);
 		} else {
 			drivetrain.setTalonTargetSpeed(joypos, joypos);
 		}
 		drivetrain.getTalonSpeed();
+		logging.log("Time: " + (System.currentTimeMillis() - time) + " Postition: " + joypos + " Rotation: " + rotation + " Talon Postition Right: " + drivetrain.talonPostitionRight() + " Talon Postition Left: " + drivetrain.talonPostitionLeft());
 		
-		logging.log(joypos+""+rotation);
 	}
 
 	@Override

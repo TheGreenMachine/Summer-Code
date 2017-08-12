@@ -79,6 +79,14 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 		
 		System.out.println("PID Updated!");
 	}
+	
+	public double talonPostitionRight() {
+		return rightMain.getPosition();
+	}
+	
+	public double talonPostitionLeft() {
+		return leftMain.getPosition() * -1;
+	}
 
 	@Override
 	public void update() {
