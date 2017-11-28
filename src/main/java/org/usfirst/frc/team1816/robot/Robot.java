@@ -84,6 +84,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		// test comment
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		logging = new Logging("log");
