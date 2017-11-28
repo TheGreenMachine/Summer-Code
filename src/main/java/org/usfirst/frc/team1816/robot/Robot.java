@@ -97,6 +97,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
+		// pete's comment
 		Scheduler.getInstance().run();
 		// averageRaw = ai.getAverageValue();
 		// averageVoltage = ai.getAverageVoltage();
