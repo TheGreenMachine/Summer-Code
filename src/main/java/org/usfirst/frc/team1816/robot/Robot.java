@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
 	private double time;
 	private Joystick joystick;
 	private Logging logging;
-	
+
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -31,6 +31,10 @@ public class Robot extends IterativeRobot {
 	// AnalogInput ai = new AnalogInput(2);
 	// int averageRaw;
 	// double averageVoltage;1
+
+	//test
+    //other tests
+    //things yes
 
 	@Override
 	public void robotInit() {
@@ -111,7 +115,7 @@ public class Robot extends IterativeRobot {
 		}
 		drivetrain.getTalonSpeed();
 		logging.log("Time: " + (System.currentTimeMillis() - time) + " Postition: " + joypos + " Rotation: " + rotation + " Talon Postition Right: " + drivetrain.talonPostitionRight() + " Talon Postition Left: " + drivetrain.talonPostitionLeft());
-		
+
 	}
 
 	@Override
