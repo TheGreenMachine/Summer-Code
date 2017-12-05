@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
             autonomousCommand.cancel();
         logging = new Logging("log");
         time = System.currentTimeMillis();
+        drivetrain.getRightMain().setEncPosition(0);
     }
 
     @Override
@@ -115,7 +116,8 @@ public class Robot extends IterativeRobot {
             drivetrain.setTalonTargetSpeed(joypos, joypos);
         }
         drivetrain.getTalonSpeed();
-        logging.log("Time: " + (System.currentTimeMillis() - time) + " Position: " + joypos + " Rotation: " + rotation + " Talon Position Right: " + drivetrain.talonPositionRight() + " Talon Position Left: " + drivetrain.talonPositionLeft());
+        logging.log("Time: " + (System.currentTimeMillis() - time) + ", Ticks: " + drivetrain.getRightMain().getEncPosition());
+//        logging.log("Time: " + (System.currentTimeMillis() - time) + " Position: " + joypos + " Rotation: " + rotation + " Talon Position Right: " + drivetrain.talonPositionRight() + " Talon Position Left: " + drivetrain.talonPositionLeft());
 
     }
 

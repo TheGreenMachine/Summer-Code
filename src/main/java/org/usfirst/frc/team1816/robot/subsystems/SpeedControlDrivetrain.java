@@ -8,19 +8,18 @@ import edu.wpi.first.wpilibj.I2C;
 
 
 public class SpeedControlDrivetrain extends Subsystem1816 {
+    private static final int TICKS_PER_REV = 9900;
     public static final double TICKS_PER_INCH = 1.018;
     private CANTalon rightMain, rightSlaveOne, rightSlaveTwo, leftMain, leftSlaveOne, leftSlaveTwo;
-    private double p = 0.1;
+    private double p = 0.2;
     private double i = 0;
-    private double d = 1;
-    private double f = 0.249;
+    private double d = 0;
+    private double f = 0;
     private int izone = 100;
     private double ramprate = 36;
     private int profile = 0;
     private double maxSpeed = 250.0;
     private AHRS navx;
-
-    private static final int TICKS_PER_REV = 9843;
 
     public SpeedControlDrivetrain(int rightMain, int rightSlaveOne, int rightSlaveTwo, int leftMain, int leftSlaveOne, int leftSlaveTwo) {
         super();

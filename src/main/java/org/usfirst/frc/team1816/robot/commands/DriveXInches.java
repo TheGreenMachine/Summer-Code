@@ -16,7 +16,7 @@ public class DriveXInches extends Command {
         this.inches = inches;
         this.speed = speed;
         drivetrain = Components.getInstance().drivetrain;
-        ticks = 300000000;
+        ticks = (int) inches * drivetrain.TICKS_PER_INCH;
 //        ticks = (int) (inches * drivetrain.TICKS_PER_INCH);
     }
 
