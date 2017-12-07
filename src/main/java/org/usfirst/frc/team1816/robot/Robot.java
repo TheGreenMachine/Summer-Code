@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
-        autonomousCommand = (Command) new DriveXInches(6, 0.5);
+        autonomousCommand = (Command) new DriveXInches(60, 0.5);
         logging = new Logging("log");
         time = System.currentTimeMillis();
 
@@ -105,7 +105,6 @@ public class Robot extends IterativeRobot {
         // Raw: " + averageRaw);
         double joypos = -joystick.getY();
         double rotation = joystick.getTwist();
-        System.out.println(joypos);
         if (rotation < -0.05) {
             drivetrain.setTalonTargetSpeed(joypos * (1 + rotation), joypos);
             System.out.println("L/R Values: " + joypos + " " + rotation);
@@ -118,7 +117,7 @@ public class Robot extends IterativeRobot {
         drivetrain.getTalonSpeed();
         logging.log("Time: " + (System.currentTimeMillis() - time) + ", Ticks: " + drivetrain.getRightMain().getEncPosition());
 //        logging.log("Time: " + (System.currentTimeMillis() - time) + " Position: " + joypos + " Rotation: " + rotation + " Talon Position Right: " + drivetrain.talonPositionRight() + " Talon Position Left: " + drivetrain.talonPositionLeft());
-
+        
     }
 
     @Override

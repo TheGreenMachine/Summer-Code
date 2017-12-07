@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.I2C;
 
 public class SpeedControlDrivetrain extends Subsystem1816 {
     private static final int TICKS_PER_REV = 9900;
-    public static final double TICKS_PER_INCH = 1.018;
+    public static final double TICKS_PER_INCH = 785;
+    public static final double INCHES_PER_REVOLUTION = TICKS_PER_REV / TICKS_PER_INCH;
     private CANTalon rightMain, rightSlaveOne, rightSlaveTwo, leftMain, leftSlaveOne, leftSlaveTwo;
     private double p = 0.2;
     private double i = 0;
@@ -75,6 +76,11 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
     public void setTalonTargetSpeed(double joyRight, double joyLeft) {
         rightMain.set(joyRight * maxSpeed);
         leftMain.set(joyLeft * maxSpeed);
+        
+//        System.out.println("Right Ticks: " + rightMain.getEncPosition());
+//        System.out.println("Left Ticks: " + leftMain.getEncPosition());
+//        System.out.println("Right Position: " + rightMain.getPosition());
+//        System.out.println("Left Position: " + leftMain.getPosition());
 
     }
 
@@ -113,6 +119,8 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
     public double talonPositionLeft() {
         return leftMain.getPosition() * -1;
     }
+    
+    
 
     @Override
     public void update() {
