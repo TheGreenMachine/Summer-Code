@@ -33,9 +33,11 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 
         navx = new AHRS(I2C.Port.kMXP);
 
-        this.leftMain.setInverted(true);
-        this.leftSlaveOne.setInverted(true);
-        this.leftSlaveTwo.setInverted(true);
+        this.rightMain.setInverted(true);
+        this.rightSlaveOne.setInverted(true);
+        this.rightSlaveTwo.setInverted(true);
+
+//        this.rightMain.reverseSensor(true);
 
         this.leftMain.configEncoderCodesPerRev(9843 / 4);
         this.rightMain.configEncoderCodesPerRev(9843 / 4);

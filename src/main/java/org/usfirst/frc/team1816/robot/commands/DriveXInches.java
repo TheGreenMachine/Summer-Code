@@ -43,7 +43,7 @@ public class DriveXInches extends Command {
         double deltaAngle = drivetrain.getGyroAngle() - initAngle;
         double velocity;
     	
-    	double currentPosition = drivetrain.getRightMain().getPosition();
+    	double currentPosition = drivetrain.getRightMain().getPosition() * -1;
     	double currentInches = drivetrain.INCHES_PER_REVOLUTION * currentPosition;
 //        ticks -= currentTicks;
     	
