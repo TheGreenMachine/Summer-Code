@@ -19,6 +19,8 @@ public class DriveXInches extends Command {
         drivetrain = Components.getInstance().drivetrain;
         ticks = (int) inches * drivetrain.TICKS_PER_INCH;
 //        ticks = (int) (inches * drivetrain.TICKS_PER_INCH);
+        drivetrain.getRightMain().setPosition(0);
+        drivetrain.getLeftMain().setPosition(0);
     }
 
 
@@ -28,8 +30,7 @@ public class DriveXInches extends Command {
      */
     protected void initialize() {
 //        drivetrain.getRightMain().setEncPosition(0);
-        drivetrain.getRightMain().setPosition(0);
-        drivetrain.getLeftMain().setPosition(0);
+
         initAngle = drivetrain.getGyroAngle();
     }
 
@@ -67,6 +68,8 @@ public class DriveXInches extends Command {
 
     protected boolean isFinished() {
         if (tempInches <= 0) {
+            drivetrain.getRightMain().setPosition(0);
+            drivetrain.getLeftMain().setPosition(0);
             return true;
         } else {
             return false;

@@ -2,10 +2,13 @@ package org.usfirst.frc.team1816.robot;
 
 import org.usfirst.frc.team1816.robot.subsystems.SpeedControlDrivetrain;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+
 public class Components {
     private static Components instance;
 
     public SpeedControlDrivetrain drivetrain;
+    public AnalogInput ai;
 
     private static final int RIGHT_MAIN = 1;
     private static final int RIGHT_SLAVE_ONE = 2;
@@ -16,6 +19,7 @@ public class Components {
 
     public Components() {
         drivetrain = new SpeedControlDrivetrain(RIGHT_MAIN, RIGHT_SLAVE_ONE, RIGHT_SLAVE_TWO, LEFT_MAIN, LEFT_SLAVE_ONE, LEFT_SLAVE_TWO);
+        ai = new AnalogInput(0);
     }
 
     public static Components getInstance() {

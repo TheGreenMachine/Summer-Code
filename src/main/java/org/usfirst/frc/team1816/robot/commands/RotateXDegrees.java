@@ -36,16 +36,17 @@ public class RotateXDegrees extends Command {
      */
     protected void execute() {
         if (target > 0 && target < 180) {
-            drivetrain.setTalonTargetSpeed(.2, .5);
+            drivetrain.setTalonTargetSpeed(-.5, .5);
 //            System.out.println("turn left");
         } else {
-            drivetrain.setTalonTargetSpeed(.5, .2);
+            drivetrain.setTalonTargetSpeed(.5, -.5);
 //            System.out.println("turn right");
         }
     }
 
     protected boolean isFinished() {
         if (drivetrain.getGyroAngle() - target <= 1 && drivetrain.getGyroAngle() - target >= -1) {
+        	System.out.println("finishing");
             return true;
         } else {
             System.out.println("Current Degrees: " + drivetrain.getGyroAngle() + " target: " + target);

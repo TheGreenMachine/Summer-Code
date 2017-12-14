@@ -1,7 +1,14 @@
 
 package org.usfirst.frc.team1816.robot;
 
+import org.usfirst.frc.team1816.robot.commands.DriveUntilDistanceCommand;
+import org.usfirst.frc.team1816.robot.commands.DriveXInches;
+import org.usfirst.frc.team1816.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team1816.robot.subsystems.SpeedControlDrivetrain;
+
 import com.edinarobotics.utils.log.Logging;
+
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,10 +16,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team1816.robot.commands.Autonomous;
-import org.usfirst.frc.team1816.robot.commands.DriveXInches;
-import org.usfirst.frc.team1816.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team1816.robot.subsystems.SpeedControlDrivetrain;
 
 public class Robot extends IterativeRobot {
 
@@ -27,9 +30,9 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
 
-    // AnalogInput ai = new AnalogInput(2);
-    // int averageRaw;
-    // double averageVoltage;1
+//     AnalogInput ai = new AnalogInput(0);
+     int averageRaw;
+     double averageVoltage;
 
 
     @Override
@@ -42,9 +45,9 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new DriveXInches(6, 0.5));
         // chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        // ai.setOversampleBits(4);
-        // ai.setAverageBits(2);
-        // AnalogInput.setGlobalSampleRate(62500);
+//         ai.setOversampleBits(4);
+//         ai.setAverageBits(2);
+         AnalogInput.setGlobalSampleRate(62500);
     }
 
     @Override
@@ -63,7 +66,9 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
 //        autonomousCommand = (Command) new DriveXInches(60, 0.5);
-        autonomousCommand = new Autonomous(Autonomous.AutonomousMode.MAIN);
+//    	autonomousCommand = (Command) new RotateXDegrees(90);
+//        autonomousCommand = new Autonomous(Autonomous.AutonomousMode.MAIN);
+    	autonomousCommand = new DriveUntilDistanceCommand(.6,.5);
         logging = new Logging("log");
         time = System.currentTimeMillis();
 
@@ -98,10 +103,10 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        // averageRaw = ai.getAverageValue();
-        // averageVoltage = ai.getAverageVoltage();
-        // System.out.println("Average voltage:" + averageVoltage + "\tAverage
-        // Raw: " + averageRaw);
+//         averageRaw = ai.getAverageValue();
+//         averageVoltage = ai.getAverageVoltage();
+         System.out.println("Average voltage: " + averageVoltage);
+         System.out.println("Average Raw: " + averageRaw);
         double joypos = -joystick.getY();
         double rotation = joystick.getTwist();
         if (rotation < -0.05) {
