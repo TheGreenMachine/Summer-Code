@@ -48,8 +48,14 @@ public class DriveUntilDistanceCommand extends Command {
         System.out.println("average voltage: " + averageVoltage);
         double deltaAngle = drivetrain.getGyroAngle() - initAngle;
         double velocity;
-        velocity = speed * (((deltaAngle) / 50) + 1);
-        drivetrain.setTalonTargetSpeed(velocity, velocity);
+        if(averageVoltage > distance + .2) {
+			velocity = speed * (((deltaAngle) / 50) + 1);
+			velocity *= (1-distance);
+		}else {
+			velocity = speed * (((deltaAngle) / 50) + 1);
+
+		}
+		drivetrain.setTalonTargetSpeed(velocity, velocity);
 	}
 
 	@Override
