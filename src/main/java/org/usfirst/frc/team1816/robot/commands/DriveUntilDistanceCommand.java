@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveUntilDistanceCommand extends Command {
-	
+
     private SpeedControlDrivetrain drivetrain;
     private double distance;
     AnalogInput ai;
@@ -17,69 +17,72 @@ public class DriveUntilDistanceCommand extends Command {
     private double initAngle;
 
 
-
-	public DriveUntilDistanceCommand(double distance, double speed) {
-		super("driveuntildistancecommand");
-		drivetrain = Components.getInstance().drivetrain;
-		this.distance = distance;
-		this.speed = speed;
-		ai = Components.getInstance().ai;
+    public DriveUntilDistanceCommand(double distance, double speed) {
+        super("driveuntildistancecommand");
+        drivetrain = Components.getInstance().drivetrain;
+        this.distance = distance;
+        this.speed = speed;
+        ai = Components.getInstance().ai;
         ai.setOversampleBits(4);
         ai.setAverageBits(2);
         AnalogInput.setGlobalSampleRate(62500);
-		requires(drivetrain);
-	}
-	
-	
-	@Override
-	protected void initialize() {
-		// TODO Auto-generated method stub
+        requires(drivetrain);
+    }
+
+
+    @Override
+    protected void initialize() {
         initAngle = drivetrain.getGyroAngle();
 
-		super.initialize();
-	}
+        super.initialize();
+    }
 
-	@Override
-	protected void execute() {
-		System.out.println("driveuntil working");
-		// TODO Auto-generated method stub
+    @Override
+    protected void execute() {
+        System.out.println("drive until working");
         averageRaw = ai.getAverageValue();
         averageVoltage = ai.getAverageVoltage();
-        System.out.println("average voltage: " + averageVoltage);
         double deltaAngle = drivetrain.getGyroAngle() - initAngle;
         double velocity;
-        if(averageVoltage > distance + .2) {
-			velocity = speed * (((deltaAngle) / 50) + 1);
-			velocity *= (1-distance);
-		}else {
-			velocity = speed * (((deltaAngle) / 50) + 1);
 
-		}
-		drivetrain.setTalonTargetSpeed(velocity, velocity);
-	}
+        velocity = speed * (((deltaAngle) / 50) + 1);
+        velocity *= (distance - averageVoltage);
 
-	@Override
-	protected void end() {
+        if (deltaAngle > 0) {
+            System.out.println("Angle: " + deltaAngle);
+            drivetrain.setTalonTargetSpeed(velocity * 0.9, velocity);
+            System.out.println("Velocity: " + velocity);
+        } else if (deltaAngle < 0) {
+            System.out.println("Angle: " + deltaAngle);
+            drivetrain.setTalonTargetSpeed(velocity, velocity * .9);
+            System.out.println("Velocity: " + velocity);
+        } else {
+            System.out.println("Angle: " + deltaAngle);
+            drivetrain.setTalonTargetSpeed(velocity, velocity);
+            System.out.println("Velocity: " + velocity);
+        }
+    }
+
+    @Override
+    protected void end() {
         drivetrain.setTalonTargetSpeed(0, 0);
+        super.end();
+    }
 
-		// TODO Auto-generated method stub
-		super.end();
-	}
+    @Override
+    protected void interrupted() {
+        // TODO Auto-generated method stub
+        end();
+        super.interrupted();
+    }
 
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		end();
-		super.interrupted();
-	}
-	
 
-	@Override
-	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		System.out.println("is finished");
+    @Override
+    protected boolean isFinished() {
+        // TODO Auto-generated method stub
+        System.out.println("is finished");
 
-		return averageVoltage > distance;
-	}
+        return averageVoltage > distance;
+    }
 
 }

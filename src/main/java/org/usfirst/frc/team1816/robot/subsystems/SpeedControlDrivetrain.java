@@ -75,9 +75,9 @@ public class SpeedControlDrivetrain extends Subsystem1816 {
 
     }
 
-    public void setTalonTargetSpeed(double joyRight, double joyLeft) {
-        rightMain.set(joyRight * maxSpeed);
-        leftMain.set(joyLeft * maxSpeed);
+    public void setTalonTargetSpeed(double right, double left) {
+        rightMain.set(right * maxSpeed);
+        leftMain.set(left * maxSpeed);
         
 //        System.out.println("Right Ticks: " + rightMain.getEncPosition());
 //        System.out.println("Left Ticks: " + leftMain.getEncPosition());

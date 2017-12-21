@@ -57,10 +57,27 @@ public class DriveXInches extends Command {
 //        } else {
 //            drivetrain.setTalonTargetSpeed(-0.1, -0.1);
 //        }
-    	
-//        if (inches > 0) {
-            velocity = speed * (((deltaAngle) / 50) + 1);
+
+        velocity = speed; //* (((deltaAngle) / 50) + 1);
+
+
+        if (deltaAngle > 1) {
+            System.out.println("Angle: " + deltaAngle);
+            drivetrain.setTalonTargetSpeed(velocity * 0.5, velocity);
+            System.out.println("Velocity: " + velocity);
+        } else if (deltaAngle < -1) {
+            System.out.println("Angle: " + deltaAngle);
+            drivetrain.setTalonTargetSpeed(velocity, velocity * .5);
+            System.out.println("Velocity: " + velocity);
+        } else {
+            System.out.println("Angle: " + deltaAngle);
             drivetrain.setTalonTargetSpeed(velocity, velocity);
+            System.out.println("Velocity: " + velocity);
+        }
+
+//        if (inches > 0) {
+//            velocity = speed * (((deltaAngle) / 50) + 1);
+//            drivetrain.setTalonTargetSpeed(velocity, velocity);
 //        } else {
 //            drivetrain.setTalonTargetSpeed(-0.1, -0.1);
 //        }

@@ -1,13 +1,7 @@
 
 package org.usfirst.frc.team1816.robot;
 
-import org.usfirst.frc.team1816.robot.commands.DriveUntilDistanceCommand;
-import org.usfirst.frc.team1816.robot.commands.DriveXInches;
-import org.usfirst.frc.team1816.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team1816.robot.subsystems.SpeedControlDrivetrain;
-
 import com.edinarobotics.utils.log.Logging;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -16,6 +10,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team1816.robot.commands.Autonomous;
+import org.usfirst.frc.team1816.robot.commands.DriveXInches;
+import org.usfirst.frc.team1816.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team1816.robot.subsystems.SpeedControlDrivetrain;
 
 public class Robot extends IterativeRobot {
 
@@ -65,10 +63,10 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
-//        autonomousCommand = (Command) new DriveXInches(60, 0.5);
+//      autonomousCommand = (Command) new DriveXInches(500, 0.5);
 //    	autonomousCommand = (Command) new RotateXDegrees(90);
-//        autonomousCommand = new Autonomous(Autonomous.AutonomousMode.MAIN);
-    	autonomousCommand = new DriveUntilDistanceCommand(.6,.5);
+        autonomousCommand = new Autonomous(Autonomous.AutonomousMode.MAIN);
+//    	autonomousCommand = new DriveUntilDistanceCommand(.8,1);
         logging = new Logging("log");
         time = System.currentTimeMillis();
 
