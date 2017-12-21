@@ -35,7 +35,8 @@ public class RotateXDegrees extends Command {
      * scheduled to run until this Command either finishes or is canceled.
      */
     protected void execute() {
-        if (target > 0 && target < 180) {
+//        if (target > 0 && target < 180) {
+        if(target - degreesStarted < 0) {
             drivetrain.setTalonTargetSpeed(-.5, .5);
 //            System.out.println("turn left");
         } else {
@@ -47,6 +48,8 @@ public class RotateXDegrees extends Command {
     protected boolean isFinished() {
         if (drivetrain.getGyroAngle() - target <= 1 && drivetrain.getGyroAngle() - target >= -1) {
         	System.out.println("finishing");
+            drivetrain.getRightMain().setPosition(0);
+            drivetrain.getLeftMain().setPosition(0);
             return true;
         } else {
             System.out.println("Current Degrees: " + drivetrain.getGyroAngle() + " target: " + target);
